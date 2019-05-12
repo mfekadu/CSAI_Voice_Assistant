@@ -25,11 +25,14 @@ while (quit_inp != 'q'):
     while not(feat_type == "ww" or feat_type == "notww"):
         feat_type = input("WW or NotWW: ").lower()
 
+    # ask for name regardless of WW or NotWW
+    # helps for adding "_{}.wav".format(last_name) later
+    first_name = input("First Name: ").lower() # used for labeling file
+    last_name = input("Last Name: ").lower() # ''
+
     if (feat_type == "ww"):
         target_dir = "Wake Word" # used for setting the correct directory
         ww_noise = 0
-        first_name = input("First Name: ").lower() # used for labeling file
-        last_name = input("Last Name: ").lower() # ''
 
         # ensures proper input
         while not (gender == "m" or gender == "f"):
