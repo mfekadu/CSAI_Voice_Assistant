@@ -12,7 +12,7 @@ STRIDE = 0.05 # time between each window
 MFCC = 13 # number of desired MFCCs
 FILTER_BANKS = 20 # number of filter banks to compute
 FFT_NUM = 512 # length of fast fourier transform window
-CURR_PATH = os.getcwd() + "\\" # current path
+CURR_PATH = os.getcwd() # current path
 
 def Convert_To_MFCC(fileName, path):
         return mfcc(Read_Audio_Data(path + fileName),RATE,WINDOW,STRIDE,MFCC,FILTER_BANKS,FFT_NUM,0,None,True).tolist()
@@ -35,10 +35,14 @@ def Read_Audio_Data(fileName):
 def Obtain_Audio_Data(data_inp):
 
         # desired dir for data extraction
-        audio_dir = CURR_PATH + data_inp + "\\"
+        audio_dir = os.path.join(CURR_PATH, data_inp)
+        print("audio_dir", audio_dir)
 
         # obtain files within the dir
         audio_list = os.listdir(audio_dir)
+        audio_list.remove(".DS_Store") if ".DS_Store" in audio_list else None
+
+        1 in [1,2,3]
 
         # name of the json file based on user input
         json_type = data_inp.replace(" ","_") + "_data.json"
@@ -68,7 +72,7 @@ def Obtain_Audio_Data(data_inp):
                 if (sample not in curr_data):
                         curr_data[sample.replace(".wav","")] = Convert_To_MFCC(sample,audio_dir)
 
-        # place contents into the json 
+        # place contents into the json
         with open(json_type, 'w') as outfile:
                 json.dump(curr_data, outfile)
 
